@@ -92,6 +92,10 @@ class RegisterActivity : AppCompatActivity() {
         ref.putFile(selectedPhotoUri!!)
             .addOnCompleteListener {
                 Log.d("RegisterActivity", "uploadImage:success" )
+
+                ref.downloadUrl.addOnSuccessListener {
+                    Log.d("RegisterActivity", "File location $it" )
+                }
             }
     }
 }
