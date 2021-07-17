@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,8 +48,8 @@ class RegisterActivity : AppCompatActivity() {
         if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             selectedPhotoUri = data.data
 
+            // deprecated code for screen the image on button
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-
             val bitMapDrawable = BitmapDrawable(bitmap)
             select_photo_button_register.setBackgroundDrawable(bitMapDrawable)
         }
@@ -95,7 +96,25 @@ class RegisterActivity : AppCompatActivity() {
 
                 ref.downloadUrl.addOnSuccessListener {
                     Log.d("RegisterActivity", "File location $it" )
+
+                    saveUserToDatabase(it.toString())
                 }
             }
     }
+
+    private fun saveUserToDatabase(profileImageUrl: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        val email = email_edit_text_register.text.toString()
+
+        val user = User(uid, email, profileImageUrl)
+
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d("RegisterActivity", "Saved user to Firebase" )
+            }
+    }
 }
+
+class User(val uid: String, val username: String, val profileImageUrl: String)
