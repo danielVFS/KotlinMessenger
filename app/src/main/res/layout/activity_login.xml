@@ -2,36 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/already_have_and_account_text_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/username_edit_text_register"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@color/primaryLightColor"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/email_edit_text_login"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="32dp"
         android:background="@color/primaryLightColor"
         android:ems="10"
         android:hint="E-mail"
@@ -39,10 +22,10 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/username_edit_text_register"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/username_edit_text_register"
-        app:layout_constraintTop_toBottomOf="@+id/username_edit_text_register" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/password_edit_text_login"
@@ -72,17 +55,4 @@
         app:layout_constraintStart_toStartOf="@+id/password_edit_text_login"
         app:layout_constraintTop_toBottomOf="@+id/password_edit_text_login" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Already have an a account?"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@+id/register_button_login"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/register_button_login"
-        app:layout_constraintTop_toBottomOf="@+id/register_button_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
