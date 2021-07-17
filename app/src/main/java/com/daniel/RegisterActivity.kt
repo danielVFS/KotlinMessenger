@@ -12,7 +12,9 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -82,6 +84,14 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage() {
+        if(selectedPhotoUri == null) return;
 
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/${filename}")
+
+        ref.putFile(selectedPhotoUri!!)
+            .addOnCompleteListener {
+                Log.d("RegisterActivity", "uploadImage:success" )
+            }
     }
 }
