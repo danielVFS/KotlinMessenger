@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Back to register"
-        android:textColor="@color/white"
+        android:textColor="@color/whitesmoke"
         android:textSize="16dp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="@+id/login_button_login"
