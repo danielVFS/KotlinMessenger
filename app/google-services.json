@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "128777108679",
+    "project_id": "kotlinmessenger-e5855",
+    "storage_bucket": "kotlinmessenger-e5855.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128777108679:android:ec816fe17089709c1312e2",
+        "android_client_info": {
+          "package_name": "com.daniel.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128777108679-j6lrl6gsbmc4d8erif7m8eh07qlu2q5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-yLSQ1F-zpug0-ap3LJkWzPyawwyTMrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128777108679-j6lrl6gsbmc4d8erif7m8eh07qlu2q5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
