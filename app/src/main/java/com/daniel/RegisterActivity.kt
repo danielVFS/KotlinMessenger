@@ -10,18 +10,16 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         register_button_register.setOnClickListener {
             performRegister()
@@ -50,8 +48,12 @@ class RegisterActivity : AppCompatActivity() {
 
             // deprecated code for screen the image on button
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
-            val bitMapDrawable = BitmapDrawable(bitmap)
-            select_photo_button_register.setBackgroundDrawable(bitMapDrawable)
+
+            select_photo_image_view_register.setImageBitmap(bitmap)
+            select_photo_button_register.alpha = 0f
+
+            //val bitMapDrawable = BitmapDrawable(bitmap)
+            //select_photo_button_register.setBackgroundDrawable(bitMapDrawable)
         }
     }
 
