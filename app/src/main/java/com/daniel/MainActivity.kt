@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -36,9 +38,12 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d("MainActivity", "signInWithEmail:success")
+                    Log.d("MainActivity", "createUserWithEmail:success")
+
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 } else {
-                    Log.d("MainActivity", "signInWithEmail:failure", it.exception)
+                    Log.d("MainActivity", "createUserWithEmail:failure:failure", it.exception)
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
