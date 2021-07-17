@@ -18,14 +18,23 @@ class MainActivity : AppCompatActivity() {
             val email = email_edit_text_register.text.toString()
             val password = password_edit_text_register.text.toString()
 
+            if(email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Email or Password must not be empty.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         Log.d("MainActivity", "signInWithEmail:success")
                     } else {
                         Log.d("MainActivity", "signInWithEmail:failure", it.exception)
-                        Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     }
+                }
+                .addOnFailureListener {
+                    Log.d("MainActivity", "Failure to create user ${it.message}")
+                    Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
                 }
         }
 
