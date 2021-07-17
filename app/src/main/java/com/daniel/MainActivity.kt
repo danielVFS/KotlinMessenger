@@ -15,32 +15,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         register_button_register.setOnClickListener {
-            val email = email_edit_text_register.text.toString()
-            val password = password_edit_text_register.text.toString()
-
-            if(email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Email or Password must not be empty.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Log.d("MainActivity", "signInWithEmail:success")
-                    } else {
-                        Log.d("MainActivity", "signInWithEmail:failure", it.exception)
-                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                .addOnFailureListener {
-                    Log.d("MainActivity", "Failure to create user ${it.message}")
-                    Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
-                }
+            performRegister()
         }
 
         already_have_and_account_text_view.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun performRegister() {
+        val email = email_edit_text_register.text.toString()
+        val password = password_edit_text_register.text.toString()
+
+        if(email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Email or Password must not be empty.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("MainActivity", "signInWithEmail:success")
+                } else {
+                    Log.d("MainActivity", "signInWithEmail:failure", it.exception)
+                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener {
+                Log.d("MainActivity", "Failure to create user ${it.message}")
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }
