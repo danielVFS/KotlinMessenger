@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        select_photo_button_register.setOnClickListener {
+
+        }
     }
 
     private fun performRegister() {
