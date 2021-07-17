@@ -100,6 +100,10 @@ class RegisterActivity : AppCompatActivity() {
                     saveUserToDatabase(it.toString())
                 }
             }
+            .addOnFailureListener {
+                Log.d("RegisterActivity", "Failure to upload image ${it.message}")
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun saveUserToDatabase(profileImageUrl: String) {
@@ -113,6 +117,10 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("RegisterActivity", "Saved user to Firebase" )
+            }
+            .addOnFailureListener {
+                Log.d("RegisterActivity", "Failure to save user ${it.message}")
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
