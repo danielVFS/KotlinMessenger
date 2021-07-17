@@ -3,6 +3,7 @@ package com.daniel
 import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -36,13 +37,15 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    var selectedPhotoUri: Uri? = null
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
-            val uri = data.data
+            selectedPhotoUri = data.data
 
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
 
             val bitMapDrawable = BitmapDrawable(bitmap)
             select_photo_button_register.setBackgroundDrawable(bitMapDrawable)
@@ -63,6 +66,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     Log.d("RegisterActivity", "createUserWithEmail:success")
 
+                    uploadImageToFirebaseStorage()
+
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -74,5 +79,9 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d("RegisterActivity", "Failure to create user ${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun uploadImageToFirebaseStorage() {
+
     }
 }
