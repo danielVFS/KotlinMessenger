@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email_edit_text_login" />
 
     <Button
-        android:id="@+id/register_button_login"
+        android:id="@+id/login_button_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -54,5 +54,19 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/password_edit_text_login"
         app:layout_constraintTop_toBottomOf="@+id/password_edit_text_login" />
+
+    <TextView
+        android:id="@+id/back_to_register_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Back to register"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="@+id/login_button_login"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/login_button_login"
+        app:layout_constraintTop_toBottomOf="@+id/login_button_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

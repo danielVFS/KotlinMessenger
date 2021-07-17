@@ -3,6 +3,7 @@ package com.daniel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -10,9 +11,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        register_button_login.setOnClickListener {
-            val email = email_edit_text_login.text.toString()
-            val password = password_edit_text_login.text.toString()
+        register_button_register.setOnClickListener {
+            val email = email_edit_text_register.text.toString()
+            val password = password_edit_text_register.text.toString()
         }
 
         already_have_and_account_text_view.setOnClickListener{

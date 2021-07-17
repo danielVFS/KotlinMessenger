@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/already_have_and_account_text_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor"
@@ -28,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/email_edit_text_login"
+        android:id="@+id/email_edit_text_register"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
@@ -45,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username_edit_text_register" />
 
     <EditText
-        android:id="@+id/password_edit_text_login"
+        android:id="@+id/password_edit_text_register"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="24dp"
@@ -56,24 +55,24 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/email_edit_text_login"
-        app:layout_constraintStart_toStartOf="@+id/email_edit_text_login"
-        app:layout_constraintTop_toBottomOf="@+id/email_edit_text_login" />
+        app:layout_constraintEnd_toEndOf="@+id/email_edit_text_register"
+        app:layout_constraintStart_toStartOf="@+id/email_edit_text_register"
+        app:layout_constraintTop_toBottomOf="@+id/email_edit_text_register" />
 
     <Button
-        android:id="@+id/register_button_login"
+        android:id="@+id/register_button_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:background="@color/white"
         android:text="Register"
-        app:layout_constraintEnd_toEndOf="@+id/password_edit_text_login"
+        app:layout_constraintEnd_toEndOf="@+id/password_edit_text_register"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/password_edit_text_login"
-        app:layout_constraintTop_toBottomOf="@+id/password_edit_text_login" />
+        app:layout_constraintStart_toStartOf="@+id/password_edit_text_register"
+        app:layout_constraintTop_toBottomOf="@+id/password_edit_text_register" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/already_have_and_account_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -81,8 +80,8 @@
         android:textColor="@color/white"
         android:textSize="16dp"
         android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@+id/register_button_login"
+        app:layout_constraintEnd_toEndOf="@+id/register_button_register"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/register_button_login"
-        app:layout_constraintTop_toBottomOf="@+id/register_button_login" />
+        app:layout_constraintStart_toStartOf="@+id/register_button_register"
+        app:layout_constraintTop_toBottomOf="@+id/register_button_register" />
 </androidx.constraintlayout.widget.ConstraintLayout>
