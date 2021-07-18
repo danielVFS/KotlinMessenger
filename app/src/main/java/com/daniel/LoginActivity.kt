@@ -1,5 +1,6 @@
 package com.daniel
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -36,8 +37,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     Log.d(TAG, "signInWithEmail:success")
-                    val userEmail = Firebase.auth.currentUser?.email
-                    Toast.makeText(this, "Welcome: $userEmail", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, LatestMessagesActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
                 } else {
                     Log.d(TAG, "signInWithEmail:failure", it.exception)
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()

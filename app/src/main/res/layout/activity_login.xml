@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:background="@drawable/rounded_button_register_login"
-        android:text="Register"
+        android:text="Login"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/password_edit_text_login"
         app:layout_constraintHorizontal_bias="0.498"
