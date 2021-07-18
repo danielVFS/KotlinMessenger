@@ -3,6 +3,7 @@ package com.daniel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.view.Menu
 import androidx.appcompat.app.ActionBar
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +12,8 @@ class LatestMessagesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
+
+        supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">" + getString(R.string.app_name) + "</font>")
 
         verifyIfUserIsLoggedIn()
     }
@@ -24,6 +27,8 @@ class LatestMessagesActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.nav_menu, menu)
