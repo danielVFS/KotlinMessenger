@@ -2,20 +2,24 @@ package com.daniel
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
+
 class RegisterActivity : AppCompatActivity() {
+    companion object {
+        const val TAG = "RegisterActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +55,6 @@ class RegisterActivity : AppCompatActivity() {
 
             select_photo_image_view_register.setImageBitmap(bitmap)
             select_photo_button_register.alpha = 0f
-
-            //val bitMapDrawable = BitmapDrawable(bitmap)
-            //select_photo_button_register.setBackgroundDrawable(bitMapDrawable)
         }
     }
 
@@ -69,19 +70,16 @@ class RegisterActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d("RegisterActivity", "createUserWithEmail:success")
+                    Log.d(TAG, "createUserWithEmail:success")
 
                     uploadImageToFirebaseStorage()
-
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
                 } else {
-                    Log.d("RegisterActivity", "createUserWithEmail:failure:failure", it.exception)
+                    Log.d(TAG, "createUserWithEmail:failure:failure", it.exception)
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
-                Log.d("RegisterActivity", "Failure to create user ${it.message}")
+                Log.d(TAG, "Failure to create user ${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
@@ -94,16 +92,16 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectedPhotoUri!!)
             .addOnCompleteListener {
-                Log.d("RegisterActivity", "uploadImage:success" )
+                Log.d(TAG, "uploadImage:success")
 
                 ref.downloadUrl.addOnSuccessListener {
-                    Log.d("RegisterActivity", "File location $it" )
+                    Log.d(TAG, "File location $it")
 
                     saveUserToDatabase(it.toString())
                 }
             }
             .addOnFailureListener {
-                Log.d("RegisterActivity", "Failure to upload image ${it.message}")
+                Log.d(TAG, "Failure to upload image ${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
@@ -118,10 +116,10 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d("RegisterActivity", "Saved user to Firebase" )
+                Log.d(TAG, "Saved user to Firebase")
             }
             .addOnFailureListener {
-                Log.d("RegisterActivity", "Failure to save user ${it.message}")
+                Log.d(TAG, "Failure to save user ${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
     }

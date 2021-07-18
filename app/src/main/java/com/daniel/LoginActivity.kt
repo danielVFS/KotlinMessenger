@@ -11,6 +11,10 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
+    companion object {
+        const val TAG = "LoginActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -31,16 +35,16 @@ class LoginActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d("LoginActivity", "signInWithEmail:success")
+                    Log.d(TAG, "signInWithEmail:success")
                     val userEmail = Firebase.auth.currentUser?.email
                     Toast.makeText(this, "Welcome: $userEmail", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.d("LoginActivity", "signInWithEmail:failure", it.exception)
+                    Log.d(TAG, "signInWithEmail:failure", it.exception)
                     Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
-                Log.d("LoginActivity", "Failure to create user ${it.message}")
+                Log.d(TAG, "Failure to create user ${it.message}")
                 Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
