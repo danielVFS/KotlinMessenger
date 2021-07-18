@@ -34,8 +34,8 @@ class NewMessageActivity : AppCompatActivity() {
 
     private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
 
+        val userListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val adapter = GroupAdapter<ViewHolder>()
 
@@ -53,19 +53,8 @@ class NewMessageActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "loadPost:onCancelled", error.toException())
             }
-        })
+        }
 
-    }
-}
-
-class UserItem(private val user: User): Item<ViewHolder>() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.username_text_view_new_message.text = user.username
-
-        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.image_view_new_message)
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.user_row_new_message
+        ref.addListenerForSingleValueEvent(userListener)
     }
 }
