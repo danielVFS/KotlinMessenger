@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
@@ -16,18 +19,56 @@ class ChatLogActivity : AppCompatActivity() {
         const val TAG = "ChatLogActivity"
     }
 
+    val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
+        recyclerview_chat_log.adapter = adapter
+
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">${user?.username}</font>")
 
-        setDummyData()
+        listenForMessages()
 
         sendbutton_chat_log.setOnClickListener {
             performSendMessage()
         }
+    }
+
+    private fun listenForMessages() {
+        val reference = FirebaseDatabase.getInstance().getReference("/messages")
+
+        reference.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val  chatMessage = snapshot.getValue(ChatMessage::class.java)
+
+                if (chatMessage != null) {
+                    if(chatMessage.fromId == FirebaseAuth.getInstance().uid) {
+                        adapter.add(ChatFromItem(chatMessage.text))
+                    } else {
+                        adapter.add(ChatToItem(chatMessage.text)) 
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+
+            }
+        })
     }
 
     private fun performSendMessage() {
