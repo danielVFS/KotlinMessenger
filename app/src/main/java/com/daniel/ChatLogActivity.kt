@@ -12,7 +12,8 @@ class ChatLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
-        supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">" + "Chat Log" + "</font>")
+        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">${user?.username}</font>")
 
         val adapter = GroupAdapter<ViewHolder>()
 

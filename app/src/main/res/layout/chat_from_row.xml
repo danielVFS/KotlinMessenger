@@ -15,6 +15,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_chat_message"
         android:ems="10"
+        android:padding="9dp"
         android:maxWidth="240dp"
         android:textAlignment="viewStart"
         android:text="OI eu sou o ronaldo, prazer em te conhecer, estou testando o comporamento do text view"
