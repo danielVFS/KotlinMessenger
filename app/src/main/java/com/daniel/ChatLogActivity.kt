@@ -15,6 +15,10 @@ class ChatLogActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">${user?.username}</font>")
 
+        setDummyData()
+    }
+
+    private fun setDummyData() {
         val adapter = GroupAdapter<ViewHolder>()
 
         adapter.add(ChatFromItem())
