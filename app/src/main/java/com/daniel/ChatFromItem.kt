@@ -3,7 +3,7 @@ package com.daniel
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 
-class ChatItem(): Item<ViewHolder>() {
+class ChatFromItem(): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
 
     }
