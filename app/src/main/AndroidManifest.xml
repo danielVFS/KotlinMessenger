@@ -11,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinMessenger">
+        <activity
+            android:name=".ChatLogActivity"
+            android:parentActivityName=".NewMessageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".NewMessageActivity" />
+        </activity>
         <activity android:name=".LatestMessagesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +35,10 @@
         </activity>
         <activity
             android:name=".NewMessageActivity"
-            android:parentActivityName=".NewMessageActivity">
+            android:parentActivityName=".LatestMessagesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NewMessageActivity" />
+                android:value=".LatestMessagesActivity" />
         </activity>
     </application>
 
