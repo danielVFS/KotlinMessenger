@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.latest_message_row.view.*
 import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
+    var chatPartnerUser: User? = null
+
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.message_textview_latest_message.text = chatMessage.text
 
@@ -25,12 +27,11 @@ class LatestMessageRow(val chatMessage: ChatMessage): Item<ViewHolder>() {
         val ref = FirebaseDatabase.getInstance().getReference("/users/$chatPartnerId")
         ref.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(User::class.java)
-
-                viewHolder.itemView.username_textview_latest_message.text = user?.username
+                chatPartnerUser = snapshot.getValue(User::class.java)
+                viewHolder.itemView.username_textview_latest_message.text = chatPartnerUser?.username
 
                 val target = viewHolder.itemView.imageview_latest_message
-                Picasso.get().load(user?.profileImageUrl).into(target)
+                Picasso.get().load(chatPartnerUser?.profileImageUrl).into(target)
             }
 
             override fun onCancelled(error: DatabaseError) {
