@@ -40,6 +40,16 @@ class LatestMessagesActivity : AppCompatActivity() {
         verifyIfUserIsLoggedIn()
     }
 
+    val latestMessagesMap = HashMap<String, ChatMessage>()
+
+    private fun refreshRecyclerViewMessages() {
+        adapter.clear()
+
+        latestMessagesMap.values.forEach {
+            adapter.add(LatestMessageRow(it))
+        }
+    }
+
     private fun listenForLatestMessages() {
         val fromId = FirebaseAuth.getInstance().uid
 
@@ -48,11 +58,15 @@ class LatestMessagesActivity : AppCompatActivity() {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
 
-                adapter.add(LatestMessageRow(chatMessage))
+                latestMessagesMap[snapshot.key!!] = chatMessage
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
 
+                latestMessagesMap[snapshot.key!!] = chatMessage
+                refreshRecyclerViewMessages()
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
