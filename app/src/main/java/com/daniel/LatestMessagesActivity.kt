@@ -11,27 +11,43 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 
 class LatestMessagesActivity : AppCompatActivity() {
     companion object {
         const val TAG = "RegisterActivity"
+        var currentUser: User? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
 
+        fetCurrentUser()
+
         supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">" + getString(R.string.app_name) + "</font>")
 
         verifyIfUserIsLoggedIn()
-
-        welcomeMessage()
     }
 
-    private fun welcomeMessage() {
-        val userEmail = Firebase.auth.currentUser?.email
-        Toast.makeText(this, "Welcome: $userEmail", Toast.LENGTH_SHORT).show()
+    private fun fetCurrentUser() {
+        val uid = FirebaseAuth.getInstance().uid
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                currentUser = snapshot.getValue(User::class.java)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
     private fun verifyIfUserIsLoggedIn() {

@@ -21,14 +21,16 @@ class ChatLogActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
 
+    var toUser: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
         recyclerview_chat_log.adapter = adapter
 
-        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">${user?.username}</font>")
+        toUser = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        supportActionBar?.title = Html.fromHtml("<font color=\"#ffffff\">${toUser   ?.username}</font>")
 
         listenForMessages()
 
@@ -46,9 +48,10 @@ class ChatLogActivity : AppCompatActivity() {
 
                 if (chatMessage != null) {
                     if(chatMessage.fromId == FirebaseAuth.getInstance().uid) {
-                        adapter.add(ChatFromItem(chatMessage.text))
+                        val currentUser = LatestMessagesActivity.currentUser
+                        adapter.add(ChatFromItem(chatMessage.text, currentUser!!))
                     } else {
-                        adapter.add(ChatToItem(chatMessage.text)) 
+                        adapter.add(ChatToItem(chatMessage.text, toUser!!))
                     }
                 }
             }
@@ -89,14 +92,5 @@ class ChatLogActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d(TAG, "Saved our chat message")
             }
-    }
-
-    private fun setDummyData() {
-        val adapter = GroupAdapter<ViewHolder>()
-
-        adapter.add(ChatFromItem("From Message"))
-        adapter.add(ChatToItem("From to"))
-
-        recyclerview_chat_log.adapter = adapter
     }
 }
