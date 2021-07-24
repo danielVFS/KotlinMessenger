@@ -40,7 +40,10 @@ class ChatLogActivity : AppCompatActivity() {
     }
 
     private fun listenForMessages() {
-        val reference = FirebaseDatabase.getInstance().getReference("/messages")
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
+
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         reference.addChildEventListener(object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -77,18 +80,25 @@ class ChatLogActivity : AppCompatActivity() {
     private fun performSendMessage() {
         val text = edittext_chat_log.text.toString()
 
-        val reference = FirebaseDatabase.getInstance().getReference("/messages").push()
-
-        val id = reference.key
         val fromId = FirebaseAuth.getInstance().uid
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
         val toId = user?.uid
+
+        val reference = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId").push()
+        val toReference = FirebaseDatabase.getInstance().getReference("/user-messages/$toId/$fromId").push()
+
+        val id = reference.key
         val timestamp = System.currentTimeMillis()
 
         if(fromId == null) return
 
         val chatMessage = ChatMessage(id!!, text, fromId, toId!!, timestamp)
         reference.setValue(chatMessage)
+            .addOnSuccessListener {
+                Log.d(TAG, "Saved our chat message")
+            }
+
+        toReference.setValue(chatMessage)
             .addOnSuccessListener {
                 Log.d(TAG, "Saved our chat message")
             }
