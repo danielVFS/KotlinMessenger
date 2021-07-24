@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
@@ -26,11 +23,15 @@ class LatestMessagesActivity : AppCompatActivity() {
         var currentUser: User? = null
     }
 
+    val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_latest_messages)
 
-        setDummyRows()
+        recyclerview_latest_messages.adapter = adapter
+
+        listenForLatestMessages()
 
         fetCurrentUser()
 
@@ -39,14 +40,31 @@ class LatestMessagesActivity : AppCompatActivity() {
         verifyIfUserIsLoggedIn()
     }
 
-    private fun setDummyRows() {
-        val adapter = GroupAdapter<ViewHolder>()
+    private fun listenForLatestMessages() {
+        val fromId = FirebaseAuth.getInstance().uid
 
-        adapter.add(LatestMessageRow())
-        adapter.add(LatestMessageRow())
-        adapter.add(LatestMessageRow())
+        val reference = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
+        reference.addChildEventListener(object: ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val chatMessage = snapshot.getValue(ChatMessage::class.java) ?: return
 
-        recyclerview_latest_messages.adapter = adapter
+                adapter.add(LatestMessageRow(chatMessage))
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
     }
 
     private fun fetCurrentUser() {
